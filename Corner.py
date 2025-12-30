@@ -12,6 +12,7 @@ class Corner(Conveyor):
         
         super().__init__(x, y, angle, scale)
         self.flip = flip
+        self.section = "Corner"
         self.cornerList.append(self)
 
     def getFlip(self):

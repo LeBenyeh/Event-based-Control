@@ -20,6 +20,7 @@ class Conveyor:
         self.rect = self.surface.get_rect(topleft=(x, y))
         self.angle = angle
         self.state = 0
+        self.section = "Conveyor"
         Conveyor.conveyorsList.append(self)
 
     def draw(self, screen):
@@ -100,8 +101,11 @@ class Conveyor:
         import math
         return math.hypot(bx - cx, by - cy) <= tol
     
-    def getType(self):
-        return self.__class__.__name__
+    def getSection(self):
+        return self.section
     
+    def setSection(self, section_str):
+        self.section = section_str
+
     def showEdges(self, screen):
         pygame.draw.rect(screen, (0,0,255), self.rect, 5)

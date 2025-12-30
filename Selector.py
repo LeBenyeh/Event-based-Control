@@ -20,6 +20,7 @@ class Selector(Conveyor):
         self.resetExitZone()
         self.collision = False
         self.currentBoxColor = None
+        self.section = "Selector"
         self.selectorList.append(self)
     
     def collisionHandler(self, box):
@@ -146,7 +147,6 @@ class Selector(Conveyor):
 
             # Facing LEFT
             elif angle in (90, -270) and abs(y - cy) < 3 and x < cx:
-                print(i, c.getType())
                 dist = cx - x
 
             else:
@@ -163,17 +163,18 @@ class Selector(Conveyor):
             self.getFrontConveyor().stop()
      
     def stopFrontConveyorSection(self):
-        frontConveyor = self.getFrontConveyor()
+        frontConveyor = self.getFrontConveyor()           
         for c in Conveyor.conveyorsList:
-            if c.getType() == frontConveyor.getType():
+            print(f"Conveyor Section: {c.getSection()}, Type: {c.__class__.__name__}")
+            if c.getSection() == frontConveyor.getSection():
                 c.stop()
             else:
-                break
+                continue
     
     def activateFrontConveyorSection(self):
         frontConveyor = self.getFrontConveyor()
         for c in Conveyor.conveyorsList:
-            if c.getType() == frontConveyor.getType():
+            if c.getSection() == frontConveyor.getSection():
                 c.activate()
             else:
                 break

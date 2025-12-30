@@ -1,5 +1,4 @@
 import pygame
-from ConveyorStart import ConveyorStart
 import assets
 from settings import *
 from Box import Box
@@ -21,8 +20,10 @@ assets.load_assets()
 DELTA_TIME = 0.1
 
 # START CONVEYOR AND CORNER CREATION -----------------------------------------------------------------
-conveyorStart = ConveyorStart(Conveyor(50,300,angle=-90.0))
-conveyorStart2 = ConveyorStart(Conveyor(0,300,-90.0))
+conveyorStart = Conveyor(50,300,angle=-90.0)
+conveyorStart.setSection("ConveyorStart")
+conveyorStart2 = Conveyor(0,300,-90.0)
+conveyorStart2.setSection("ConveyorStart")
 
 
 
@@ -43,10 +44,10 @@ for i in range(TRACKS_WIDTH,0,-1):
     conveyorBotList.append(Conveyor(150+50*TRACKS_LENGTH,300+50*i,0))
 
 # Create corner instances
-Corner(100,250-50*TRACKS_WIDTH,0),                               #top left
-Corner(150+50*TRACKS_LENGTH,250-50*TRACKS_WIDTH,-90),             #top right
-Corner(150+50*TRACKS_LENGTH,350+50*TRACKS_WIDTH,-90,flip=True),   #bottom right
-Corner(100,350+50*TRACKS_WIDTH,-180,flip=True)                   #bottom left
+Corner(100,250-50*TRACKS_WIDTH,0)                               #top left
+Corner(150+50*TRACKS_LENGTH,250-50*TRACKS_WIDTH,-90)            #top right
+Corner(150+50*TRACKS_LENGTH,350+50*TRACKS_WIDTH,-90,flip=True)   #bottom right
+Corner(100,350+50*TRACKS_WIDTH,-180,flip=True)                  #bottom left
 
 #create list of Selector instances
 Selector(100, 300, angle=90, entryZone='left')
