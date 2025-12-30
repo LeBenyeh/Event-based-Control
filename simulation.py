@@ -50,13 +50,13 @@ cornerList = [
     ]
 
 #create list of Selector instances
-selectorList = [Selector(100, 300, angle=90, entryZone='left', exitZone='down')]
+selectorList = [Selector(100, 300, angle=90, entryZone='left')]
 # END CONVEYOR AND CORNER CREATION -----------------------------------------------------------------
 
 
 # START BOXES CREATION -----------------------------------------------------------------
 boxes = [
-    Box(60, 315, 0, 0, color=RED),
+    Box(60, 315, 0, 0, color=GREEN),
     Box(125, 400, 0, 0, color=BLUE),
     Box(125, 200, 0, 0, color=GREEN),
     Box(20, 315, 0, 0, color=RED)

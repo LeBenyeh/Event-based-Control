@@ -10,21 +10,22 @@ from settings import BOX_SPEED, RED, GREEN, BLUE
 class Selector(Conveyor):
     RADIUS = 50  # Define a radius for detecting nearby conveyors
     DETECT_MARGIN = 20  # Margin for exit zone detection
-    def __init__(self, x=0, y=0, angle=0,scale=0.1, entryZone: str='up', exitZone: str='left'):
+    def __init__(self, x=0, y=0, angle=0,scale=0.1, entryZone: str='up'):
         self.base_img = assets.SELECTOR_IMG.copy()
         super().__init__(x, y, angle, scale)
         self.state_machine = SelectorState.IDLE
         self.detectionZone = DetectionZone(self)
         self.setEntryZone(self.rect, entryZone)
-        self.setExitZone(self.rect, exitZone)
+        self.resetExitZone()
         self.collision = False
+        self.currentBoxColor = None
     
     def collisionHandler(self, box):
         self.collision = True
         print("Collision with box and selector detected")
 
     def stateHandler(self, box):
-        print(f"State machine: {self.state_machine}")
+        #print(f"State machine: {self.state_machine}")
         match self.state_machine:
             case SelectorState.IDLE:
                 self.activateFrontConveyor()
@@ -36,13 +37,23 @@ class Selector(Conveyor):
                 if self.isBoxCentered(box): self.state_machine = SelectorState.ROTATING
                 
             case SelectorState.ROTATING:
-                self.rotate(90)
+                if self.currentBoxColor == RED:
+                    self.rotate(-90)
+                elif self.currentBoxColor == BLUE:
+                    self.rotate(180)
+                elif self.currentBoxColor == GREEN:
+                  self.rotate(90)
                 self.state_machine = SelectorState.SENDING
             case SelectorState.SENDING:
                 self.moveToFacingDirection(box)
             
             case SelectorState.RESETTING:
-                self.rotate(-90)
+                if self.currentBoxColor == RED:
+                    self.rotate(90)
+                elif self.currentBoxColor == BLUE:
+                    self.rotate(-180)
+                elif self.currentBoxColor == GREEN:
+                  self.rotate(-90)
                 self.collision = False
                 self.state_machine = SelectorState.IDLE
                 
@@ -51,10 +62,20 @@ class Selector(Conveyor):
         self.detectionZone.update(box)
         self.stateHandler(box)
         
-
-    
     def boxEnteredBehavior(self, box):
         self.state_machine = SelectorState.RECEIVING
+        self.currentBoxColor = box.getColor()
+        print(f"Box color detected: {self.currentBoxColor}")
+        if self.currentBoxColor == RED:
+            exitZone = 'up'
+        elif self.currentBoxColor == BLUE:
+            exitZone = 'right'
+        elif self.currentBoxColor == GREEN:
+            exitZone = 'down'
+        else:
+            exitZone = 'left'
+        self.resetExitZone()
+        self.setExitZone(self.rect, exitZone)
 
     def boxExitedBehavior(self, box):
         self.state_machine = SelectorState.RESETTING
@@ -82,6 +103,9 @@ class Selector(Conveyor):
             self.detectionZone.setExitZone(pygame.Rect(selectorRect.left - self.DETECT_MARGIN, selectorRect.top, self.DETECT_MARGIN, selectorRect.height))
         else:
             print("Invalid exit zone position")
+
+    def resetExitZone(self):
+        self.detectionZone.setExitZone(pygame.Rect(0, 0, 0, 0))  # Reset to an empty rect
 
     def getNearbyConveyors(self):
        cx, cy = self.getMiddle()
