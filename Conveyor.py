@@ -2,6 +2,7 @@ import pygame
 import assets
 from Box import Box
 from settings import BOX_SPEED
+from SectionType import SectionType
 
 class Conveyor:
     conveyorsList = []
@@ -20,7 +21,7 @@ class Conveyor:
         self.rect = self.surface.get_rect(topleft=(x, y))
         self.angle = angle
         self.state = 0
-        self.section = "Conveyor"
+        self.section = SectionType.CONVEYOR
         Conveyor.conveyorsList.append(self)
 
     def draw(self, screen):

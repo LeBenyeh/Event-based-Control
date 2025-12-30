@@ -2,6 +2,7 @@ import pygame
 from Conveyor import Conveyor
 import assets
 from settings import BOX_SPEED
+from SectionType import SectionType
 
 class Corner(Conveyor):
     cornerList = []
@@ -12,7 +13,7 @@ class Corner(Conveyor):
         
         super().__init__(x, y, angle, scale)
         self.flip = flip
-        self.section = "Corner"
+        self.section = SectionType.CORNER
         self.cornerList.append(self)
 
     def getFlip(self):

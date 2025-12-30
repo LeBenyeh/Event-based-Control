@@ -5,12 +5,10 @@ from Box import Box
 from Conveyor import Conveyor
 from Corner import Corner
 from Selector import Selector
+from SectionType import SectionType
 
 
 #Lists
-conveyorTopList = []
-conveyorMidList = []
-conveyorBotList = []
 
 # screen and framerate variables
 screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT)) #creating canva
@@ -21,33 +19,33 @@ DELTA_TIME = 0.1
 
 # START CONVEYOR AND CORNER CREATION -----------------------------------------------------------------
 conveyorStart = Conveyor(50,300,angle=-90.0)
-conveyorStart.setSection("ConveyorStart")
+conveyorStart.setSection(SectionType.CONVEYOR_START)
 conveyorStart2 = Conveyor(0,300,-90.0)
-conveyorStart2.setSection("ConveyorStart")
+conveyorStart2.setSection(SectionType.CONVEYOR_START)
 
 
 
 # Creation of  vertical left conveyors
 for i in range(0, TRACKS_WIDTH):
-    conveyorTopList.append(Conveyor(100,300-50*(i+1),0))
-    conveyorBotList.append(Conveyor(100,300+50*(i+1),180))
+    Conveyor(100,300-50*(i+1),0).setSection(SectionType.CONVEYOR_TOP)
+    Conveyor(100,300+50*(i+1),180).setSection(SectionType.CONVEYOR_BOT)
 
 # Creation of horizontal conveyors
 for i in range(0,TRACKS_LENGTH):
-    conveyorTopList.append(Conveyor(150+50*i,300-50*(TRACKS_WIDTH+1),-90))
-    conveyorMidList.append(Conveyor(150+50*i,300,-90))
-    conveyorBotList.append(Conveyor(150+50*i,300+50*(TRACKS_WIDTH+1),-90))
+    Conveyor(150+50*i,300-50*(TRACKS_WIDTH+1),-90).setSection(SectionType.CONVEYOR_TOP)
+    Conveyor(150+50*i,300,-90).setSection(SectionType.CONVEYOR_MID)
+    Conveyor(150+50*i,300+50*(TRACKS_WIDTH+1),-90).setSection(SectionType.CONVEYOR_BOT)
 
 # Creation of vertical right conveyors
 for i in range(TRACKS_WIDTH,0,-1):
-    conveyorTopList.append(Conveyor(150+50*TRACKS_LENGTH,300-50*i,-180))
-    conveyorBotList.append(Conveyor(150+50*TRACKS_LENGTH,300+50*i,0))
+    Conveyor(150+50*TRACKS_LENGTH,300-50*i,-180).setSection(SectionType.CONVEYOR_TOP)
+    Conveyor(150+50*TRACKS_LENGTH,300+50*i,0).setSection(SectionType.CONVEYOR_BOT)
 
 # Create corner instances
-Corner(100,250-50*TRACKS_WIDTH,0)                               #top left
-Corner(150+50*TRACKS_LENGTH,250-50*TRACKS_WIDTH,-90)            #top right
-Corner(150+50*TRACKS_LENGTH,350+50*TRACKS_WIDTH,-90,flip=True)   #bottom right
-Corner(100,350+50*TRACKS_WIDTH,-180,flip=True)                  #bottom left
+Corner(100,250-50*TRACKS_WIDTH,0).setSection(SectionType.CONVEYOR_TOP)                               #top left
+Corner(150+50*TRACKS_LENGTH,250-50*TRACKS_WIDTH,-90).setSection(SectionType.CONVEYOR_TOP)            #top right
+Corner(150+50*TRACKS_LENGTH,350+50*TRACKS_WIDTH,-90,flip=True).setSection(SectionType.CONVEYOR_BOT)   #bottom right
+Corner(100,350+50*TRACKS_WIDTH,-180,flip=True).setSection(SectionType.CONVEYOR_BOT)                  #bottom left
 
 #create list of Selector instances
 Selector(100, 300, angle=90, entryZone='left')

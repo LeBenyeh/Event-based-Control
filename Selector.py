@@ -6,6 +6,7 @@ from Conveyor import Conveyor
 from Box import Box
 from DetectionZone import DetectionZone
 from settings import RED, GREEN, BLUE
+from SectionType import SectionType
 
 class Selector(Conveyor):
     RADIUS = 50  # Define a radius for detecting nearby conveyors
@@ -20,7 +21,7 @@ class Selector(Conveyor):
         self.resetExitZone()
         self.collision = False
         self.currentBoxColor = None
-        self.section = "Selector"
+        self.section = SectionType.SELECTOR
         self.selectorList.append(self)
     
     def collisionHandler(self, box):
@@ -165,7 +166,6 @@ class Selector(Conveyor):
     def stopFrontConveyorSection(self):
         frontConveyor = self.getFrontConveyor()           
         for c in Conveyor.conveyorsList:
-            print(f"Conveyor Section: {c.getSection()}, Type: {c.__class__.__name__}")
             if c.getSection() == frontConveyor.getSection():
                 c.stop()
             else:
