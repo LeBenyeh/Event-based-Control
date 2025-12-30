@@ -3,6 +3,7 @@ from settings import RED, BLUE, GREEN
 import assets
 
 class Box:
+    boxList = []
     def __init__(self, x=0, y=0, xspeed=0, yspeed=0, size=20, color=RED):
         
         box_img = assets.BOX_IMG.copy()
@@ -21,6 +22,7 @@ class Box:
         self.pos = pygame.Vector2(x, y)
         self.xspeed = xspeed
         self.yspeed = yspeed
+        self.boxList.append(self)
 
     def update(self, dt):
         self.pos.x += self.xspeed * dt

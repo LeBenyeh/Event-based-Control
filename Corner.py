@@ -4,6 +4,7 @@ import assets
 from settings import BOX_SPEED
 
 class Corner(Conveyor):
+    cornerList = []
     def __init__(self, x, y, angle=0, scale=0.1, flip=False):
         self.base_img = assets.CORNER_IMG.copy()  
         if flip:
@@ -11,6 +12,7 @@ class Corner(Conveyor):
         
         super().__init__(x, y, angle, scale)
         self.flip = flip
+        self.cornerList.append(self)
 
     def getFlip(self):
         return self.flip

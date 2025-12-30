@@ -23,7 +23,6 @@ class DetectionZone:
         # If no box tracked -> check entry
         if self.tracked_box is None:
             if self.entry_rect.colliderect(box.rect):
-                print("Box entered detection zone")
                 self.tracked_box = box  # Enregistrement de la box suivie
                 self.selector.boxEnteredBehavior(box)
         # If a box is tracked -> check exit

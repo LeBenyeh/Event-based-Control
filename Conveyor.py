@@ -99,3 +99,9 @@ class Conveyor:
         cx, cy = self.getMiddle()
         import math
         return math.hypot(bx - cx, by - cy) <= tol
+    
+    def getType(self):
+        return self.__class__.__name__
+    
+    def showEdges(self, screen):
+        pygame.draw.rect(screen, (0,0,255), self.rect, 5)
