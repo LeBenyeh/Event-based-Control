@@ -9,7 +9,7 @@ from settings import BOX_SPEED, RED, GREEN, BLUE
 
 class Selector(Conveyor):
     RADIUS = 50  # Define a radius for detecting nearby conveyors
-    DETECT_MARGIN = 20  # Margin for exit zone detection
+    DETECT_MARGIN = 5  # Margin for exit zone detection
     def __init__(self, x=0, y=0, angle=0,scale=0.1, entryZone: str='up'):
         self.base_img = assets.SELECTOR_IMG.copy()
         super().__init__(x, y, angle, scale)

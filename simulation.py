@@ -56,10 +56,11 @@ selectorList = [Selector(100, 300, angle=90, entryZone='left')]
 
 # START BOXES CREATION -----------------------------------------------------------------
 boxes = [
-    Box(60, 315, 0, 0, color=GREEN),
+    Box(90, 315, 0, 0, color=GREEN),
     Box(125, 400, 0, 0, color=BLUE),
     Box(125, 200, 0, 0, color=GREEN),
-    Box(20, 315, 0, 0, color=RED)
+    Box(60, 315, 0, 0, color=RED),
+    Box(0, 315, 0, 0, color=BLUE)
 
     ]
 # END BOXES CREATION ------------------------------------------
