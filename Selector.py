@@ -108,84 +108,8 @@ class Selector(Conveyor):
 
     def resetExitZone(self):
         self.detectionZone.setExitZone(pygame.Rect(0, 0, 0, 0))  # Reset to an empty rect
-
-    def getNearbyConveyors(self):
-       cx, cy = self.getMiddle()
-       nearby = []
-       for c in Conveyor.conveyorsList:
-           if c is self:
-               continue
-           c_mid_x, c_mid_y = c.getMiddle()
-           dist = ((cx - c_mid_x)**2 + (cy - c_mid_y)**2)**0.5
-           if dist <= self.RADIUS:
-               nearby.append(c)
-       return nearby
     
-    def getFrontConveyor(self):
-        angle = self.getAngle()
-        cx, cy = self.getMiddle()
-
-        closest = None
-        min_dist = float("inf")
-
-        for i,c in enumerate(Conveyor.conveyorsList):
-            if c is self:
-                continue
-
-            x, y = c.getMiddle()
-
-            # Facing UP
-            if angle == 0 and abs(x - cx) < 3 and y < cy:
-                dist = cy - y
-
-            # Facing DOWN
-            elif angle in (180, -180) and abs(x - cx) < 3 and y > cy:
-                dist = y - cy
-
-            # Facing RIGHT
-            elif angle in (-90, 270) and abs(y - cy) < 3 and x > cx:
-                dist = x - cx
-
-            # Facing LEFT
-            elif angle in (90, -270) and abs(y - cy) < 3 and x < cx:
-                dist = cx - x
-
-            else:
-                continue
-
-            # Keep closest one
-            if dist < min_dist:
-                min_dist = dist
-                closest = c
-        return closest
-    
-    def stopFrontConveyor(self):
-        if self.getFrontConveyor():
-            self.getFrontConveyor().stop()
-     
-    def stopFrontConveyorSection(self):
-        frontConveyor = self.getFrontConveyor()           
-        for c in Conveyor.conveyorsList:
-            if c.getSection() == frontConveyor.getSection():
-                c.stop()
-            else:
-                continue
-    
-    def activateFrontConveyorSection(self):
-        frontConveyor = self.getFrontConveyor()
-        for c in Conveyor.conveyorsList:
-            if c.getSection() == frontConveyor.getSection():
-                c.activate()
-            else:
-                break
-            
-    def activateFrontConveyor(self):
-        if self.getFrontConveyor():
-            self.getFrontConveyor().activate()
-
-    def stopNearbyConveyors(self):
-        for c in self.getNearbyConveyors():
-            c.stop()
+   
 
     def draw(self, screen):
         import pygame
