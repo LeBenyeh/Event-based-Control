@@ -6,6 +6,7 @@ from Conveyor import Conveyor
 from Corner import Corner
 from Selector import Selector
 from SectionType import SectionType
+from Transformer import Transformer
 
 
 #Lists
@@ -32,9 +33,19 @@ for i in range(0, TRACKS_WIDTH):
 
 # Creation of horizontal conveyors
 for i in range(0,TRACKS_LENGTH):
-    Conveyor(150+50*i,300-50*(TRACKS_WIDTH+1),-90).setSection(SectionType.CONVEYOR_TOP)
-    Conveyor(150+50*i,300,-90).setSection(SectionType.CONVEYOR_MID)
-    Conveyor(150+50*i,300+50*(TRACKS_WIDTH+1),-90).setSection(SectionType.CONVEYOR_BOT)
+    if i == TRACKS_LENGTH - 3:
+        transformerTop = Transformer(150+50*i,300-50*(TRACKS_WIDTH+1),angle=90)
+        Transformer(150+50*i,300,angle=90)
+        Transformer(150+50*i,300+50*(TRACKS_WIDTH+1),angle=90)
+    elif i > TRACKS_LENGTH - 3: 
+        Conveyor(150+50*i,300-50*(TRACKS_WIDTH+1),-90).setSection(SectionType.CONVEYOR_TOP2)
+        Conveyor(150+50*i,300,-90).setSection(SectionType.CONVEYOR_MID2)
+        Conveyor(150+50*i,300+50*(TRACKS_WIDTH+1),-90).setSection(SectionType.CONVEYOR_BOT2)
+    else : 
+        Conveyor(150+50*i,300-50*(TRACKS_WIDTH+1),-90).setSection(SectionType.CONVEYOR_TOP)
+        Conveyor(150+50*i,300,-90).setSection(SectionType.CONVEYOR_MID)
+        Conveyor(150+50*i,300+50*(TRACKS_WIDTH+1),-90).setSection(SectionType.CONVEYOR_BOT)
+
 
 # Creation of vertical right conveyors
 for i in range(TRACKS_WIDTH,0,-1):
@@ -55,7 +66,7 @@ Selector(100, 300, angle=90, entryZone='left')
 # START BOXES CREATION -----------------------------------------------------------------
 
 Box(125, 400, 0, 0, color=BLUE)
-Box(125, 200, 0, 0, color=GREEN)
+Box(200, 65, 0, 0, color=GREEN)
 Box(60, 315, 0, 0, color=RED)
 Box(0, 315, 0, 0, color=BLUE)
 # END BOXES CREATION ------------------------------------------
@@ -65,6 +76,9 @@ def drawing_elements():
     screen.fill(pygame.Color(255,255,255))  # background color drawing in white
     for c in Conveyor.conveyorsList:
         c.draw(screen)
+    
+    for t in Transformer.transformerList:
+        t.draw(screen)
 
     for b in Box.boxList:
         b.update(DELTA_TIME)
@@ -102,7 +116,7 @@ while running:
     collisionChecker(Conveyor.conveyorsList, Box.boxList)
     updateSelectors()
     drawing_elements()
-    
+
     DELTA_TIME = clock.tick(FPS)/1000
     DELTA_TIME = max(0.001,min(0.1, DELTA_TIME))
 pygame.quit()

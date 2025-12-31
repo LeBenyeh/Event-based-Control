@@ -9,14 +9,13 @@ class Box:
         box_img = assets.BOX_IMG.copy()
         box_img = pygame.transform.scale(box_img, (size, size))
         self.color = color
-
         if color == RED:
             box_img.fill(RED, special_flags=pygame.BLEND_RGBA_MULT)
         elif color == BLUE:
             box_img.fill(BLUE, special_flags=pygame.BLEND_RGBA_MULT)
         elif color == GREEN:
             box_img.fill(GREEN, special_flags=pygame.BLEND_RGBA_MULT)
-
+        self.size = size
         self.surface = box_img
         self.rect = self.surface.get_rect(topleft=(x, y))
         self.pos = pygame.Vector2(x, y)
@@ -50,7 +49,7 @@ class Box:
         return (self.pos.x, self.pos.y)
     
     def getSize(self):
-        return self.rect.size
+        return self.size
 
     def getColor(self):
         return self.color

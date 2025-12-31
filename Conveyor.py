@@ -170,7 +170,8 @@ class Conveyor:
             self.getFrontConveyor().stop()
      
     def stopFrontConveyorSection(self):
-        frontConveyor = self.getFrontConveyor()           
+        frontConveyor = self.getFrontConveyor() 
+        print(frontConveyor.getSection())          
         for c in Conveyor.conveyorsList:
             if c.getSection() == frontConveyor.getSection():
                 c.stop()
@@ -183,7 +184,7 @@ class Conveyor:
             if c.getSection() == frontConveyor.getSection():
                 c.activate()
             else:
-                break
+                continue
             
     def activateFrontConveyor(self):
         if self.getFrontConveyor():

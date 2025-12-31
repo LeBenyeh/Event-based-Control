@@ -6,3 +6,4 @@ class SelectorState(Enum):
     ROTATING = 2
     SENDING = 3
     RESETTING = 4
+    WAITTING = 5

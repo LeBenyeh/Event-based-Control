@@ -4,7 +4,7 @@ pygame.init()
 # Windows
 SCREEN_WIDTH = 640
 SCREEN_HEIGHT = 640
-FPS = 60
+FPS = 10
 
 
 #   COLORS

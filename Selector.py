@@ -13,7 +13,9 @@ class Selector(Conveyor):
     DETECT_MARGIN = 1  # Margin for exit zone detection
     selectorList = []
     def __init__(self, x=0, y=0, angle=0,scale=0.1, entryZone: str='up'):
-        self.base_img = assets.SELECTOR_IMG.copy()
+        # allow subclasses to predefine `self.base_img` before calling super().__init__
+        if not hasattr(self, 'base_img'):
+            self.base_img = assets.SELECTOR_IMG.copy()
         super().__init__(x, y, angle, scale)
         self.state_machine = SelectorState.IDLE
         self.detectionZone = DetectionZone(self)
@@ -96,20 +98,21 @@ class Selector(Conveyor):
 
     def setExitZone(self, selectorRect: pygame.Rect, exitZonePosition: str):
         if exitZonePosition == 'up':
-            self.detectionZone.setExitZone(pygame.Rect(selectorRect.left, selectorRect.top - self.DETECT_MARGIN, selectorRect.width, self.DETECT_MARGIN))
+            self.detectionZone.setExitZone(pygame.Rect(selectorRect.left, selectorRect.top - self.DETECT_MARGIN - 20, selectorRect.width, self.DETECT_MARGIN))
         elif exitZonePosition == 'down':
-            self.detectionZone.setExitZone(pygame.Rect(selectorRect.left, selectorRect.bottom, selectorRect.width, self.DETECT_MARGIN))
+            self.detectionZone.setExitZone(pygame.Rect(selectorRect.left, selectorRect.bottom + 20, selectorRect.width, self.DETECT_MARGIN))
         elif exitZonePosition == 'right':
-            self.detectionZone.setExitZone(pygame.Rect(selectorRect.right, selectorRect.top, self.DETECT_MARGIN, selectorRect.height))
+            self.detectionZone.setExitZone(pygame.Rect(selectorRect.right + 20, selectorRect.top, self.DETECT_MARGIN, selectorRect.height))
         elif exitZonePosition == 'left':
-            self.detectionZone.setExitZone(pygame.Rect(selectorRect.left - self.DETECT_MARGIN, selectorRect.top, self.DETECT_MARGIN, selectorRect.height))
+            self.detectionZone.setExitZone(pygame.Rect(selectorRect.left - self.DETECT_MARGIN - 20, selectorRect.top, self.DETECT_MARGIN, selectorRect.height))
         else:
             print("Invalid exit zone position")
 
     def resetExitZone(self):
         self.detectionZone.setExitZone(pygame.Rect(0, 0, 0, 0))  # Reset to an empty rect
     
-   
+    def getStateMachine(self):
+        return self.state_machine.name
 
     def draw(self, screen):
         import pygame
