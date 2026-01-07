@@ -4,7 +4,7 @@ pygame.init()
 # Windows
 SCREEN_WIDTH = 640
 SCREEN_HEIGHT = 640
-FPS = 10
+FPS = 60
 
 
 #   COLORS
@@ -17,5 +17,5 @@ GREEN = pygame.Color(0,255,0)
 BOX_SPEED = 20
 TRACKS_LENGTH = 5
 TRACKS_WIDTH = 4
-
+WAIT_TIME = 2000 # in milliseconds
 

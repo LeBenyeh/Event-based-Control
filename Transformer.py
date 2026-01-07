@@ -1,6 +1,7 @@
 from Selector import Selector
 from SectionType import SectionType
 from SelectorState import SelectorState
+from settings import WAIT_TIME
 import assets
 class Transformer(Selector):
     transformerList = []
@@ -31,7 +32,7 @@ class Transformer(Selector):
 
             case SelectorState.WAITTING:
                 box.setSpeed(0,0)
-                if pygame.time.get_ticks()-self.startTimer > 2000:
+                if pygame.time.get_ticks()-self.startTimer > WAIT_TIME:
                     self.state_machine = SelectorState.ROTATING 
                 
             case SelectorState.ROTATING:
