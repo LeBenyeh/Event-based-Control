@@ -19,4 +19,4 @@ BOX_SPEED = 20
 TRACKS_LENGTH = 5
 TRACKS_WIDTH = 4
 WAIT_TIME = 2000 # in milliseconds
-
+DISPENSER_COOLDOWN = 3 # in seconds

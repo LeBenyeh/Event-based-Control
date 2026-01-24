@@ -66,6 +66,7 @@ Selector(100+STARTX, 300+STARTY, angle=90, entryZone='left')
 
 #START DISPENSER CREATION ------------------------- 
 dispenser = Dispenser(STARTX-50, 300+STARTY, angle=-90)
+dispenser.setSection(SectionType.CONVEYOR_START)
 
 button_dispenser = pygame.Rect(0,0,200,100)
 #END DISPENSER CREATION -----------------------------
