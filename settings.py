@@ -15,7 +15,7 @@ BLACK = pygame.Color(0,0,0)
 
 # Game settings
 
-BOX_SPEED = 20
+BOX_SPEED = 40
 TRACKS_LENGTH = 5
 TRACKS_WIDTH = 4
 WAIT_TIME = 2000 # in milliseconds

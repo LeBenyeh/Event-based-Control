@@ -58,3 +58,5 @@ class Box:
     def getColor(self):
         return self.color
     
+    def deleteBox(self): # delete the box from the list of boxes
+        self.boxList.remove(self)

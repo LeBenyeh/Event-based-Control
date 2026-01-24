@@ -6,9 +6,10 @@ BOX_IMG = None
 SELECTOR_IMG = None
 TRANSFORMER_IMG = None
 DISPENSER_IMG = None
+COLLECTOR_IMG = None
 
 def load_assets():
-    global CONVEYOR_IMG, CORNER_IMG, BOX_IMG, SELECTOR_IMG, TRANSFORMER_IMG, DISPENSER_IMG
+    global CONVEYOR_IMG, CORNER_IMG, BOX_IMG, SELECTOR_IMG, TRANSFORMER_IMG, DISPENSER_IMG, COLLECTOR_IMG
 
     CONVEYOR_IMG = pygame.image.load(
         'img/conveyor.png'
@@ -32,6 +33,10 @@ def load_assets():
 
     DISPENSER_IMG = pygame.image.load(
         'img/dispenser.png'
+    ).convert_alpha()
+
+    COLLECTOR_IMG = pygame.image.load(
+        'img/collector.png'
     ).convert_alpha()
 
 

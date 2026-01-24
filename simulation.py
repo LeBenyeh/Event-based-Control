@@ -8,6 +8,7 @@ from Selector import Selector
 from SectionType import SectionType
 from Transformer import Transformer
 from Dispenser import Dispenser
+from Collector import Collector
 
 #Lists
 
@@ -30,8 +31,8 @@ conveyorStart2.setSection(SectionType.CONVEYOR_START)
 
 # Creation of  vertical left conveyors
 for i in range(0, TRACKS_WIDTH):
-    Conveyor(100+STARTX,300-50*(i+1)+STARTY,0).setSection(SectionType.CONVEYOR_TOP)
-    Conveyor(100+STARTX,300+50*(i+1)+STARTY,180).setSection(SectionType.CONVEYOR_BOT)
+    Conveyor(100+STARTX,300-50*(i+1)+STARTY,0).setSection(SectionType.CONVEYOR_TOP1)
+    Conveyor(100+STARTX,300+50*(i+1)+STARTY,180).setSection(SectionType.CONVEYOR_BOT1)
 
 # Creation of horizontal conveyors
 for i in range(0,TRACKS_LENGTH):
@@ -40,25 +41,25 @@ for i in range(0,TRACKS_LENGTH):
         Transformer(150+50*i+STARTX,300+STARTY,angle=90)
         Transformer(150+50*i+STARTX,300+50*(TRACKS_WIDTH+1)+STARTY,angle=90)
     elif i > TRACKS_LENGTH - 3: 
-        Conveyor(150+50*i+STARTX,300-50*(TRACKS_WIDTH+1)+STARTY,-90).setSection(SectionType.CONVEYOR_TOP2)
+        Conveyor(150+50*i+STARTX,300-50*(TRACKS_WIDTH+1)+STARTY,-90).setSection(SectionType.CONVEYOR_TOP3)
         Conveyor(150+50*i+STARTX,300+STARTY,-90).setSection(SectionType.CONVEYOR_MID2)
-        Conveyor(150+50*i+STARTX,300+50*(TRACKS_WIDTH+1)+STARTY,-90).setSection(SectionType.CONVEYOR_BOT2)
+        Conveyor(150+50*i+STARTX,300+50*(TRACKS_WIDTH+1)+STARTY,-90).setSection(SectionType.CONVEYOR_BOT3)
     else : 
-        Conveyor(150+50*i+STARTX,300-50*(TRACKS_WIDTH+1)+STARTY,-90).setSection(SectionType.CONVEYOR_TOP)
-        Conveyor(150+50*i+STARTX,300+STARTY,-90).setSection(SectionType.CONVEYOR_MID)
-        Conveyor(150+50*i+STARTX,300+50*(TRACKS_WIDTH+1)+STARTY,-90).setSection(SectionType.CONVEYOR_BOT)
+        Conveyor(150+50*i+STARTX,300-50*(TRACKS_WIDTH+1)+STARTY,-90).setSection(SectionType.CONVEYOR_TOP2)
+        Conveyor(150+50*i+STARTX,300+STARTY,-90).setSection(SectionType.CONVEYOR_MID1)
+        Conveyor(150+50*i+STARTX,300+50*(TRACKS_WIDTH+1)+STARTY,-90).setSection(SectionType.CONVEYOR_BOT2)
 
 
 # Creation of vertical right conveyors
 for i in range(TRACKS_WIDTH,0,-1):
-    Conveyor(150+50*TRACKS_LENGTH+STARTX,300-50*i+STARTY,-180).setSection(SectionType.CONVEYOR_TOP)
-    Conveyor(150+50*TRACKS_LENGTH+STARTX,300+50*i+STARTY,0).setSection(SectionType.CONVEYOR_BOT)
+    Conveyor(150+50*TRACKS_LENGTH+STARTX,300-50*i+STARTY,-180).setSection(SectionType.CONVEYOR_TOP4)
+    Conveyor(150+50*TRACKS_LENGTH+STARTX,300+50*i+STARTY,0).setSection(SectionType.CONVEYOR_BOT4)
 
 # Create corner instances
-Corner(100+STARTX,250-50*TRACKS_WIDTH+STARTY,0).setSection(SectionType.CONVEYOR_TOP)                               #top left
-Corner(150+50*TRACKS_LENGTH+STARTX,250-50*TRACKS_WIDTH+STARTY,-90).setSection(SectionType.CONVEYOR_TOP)            #top right
-Corner(150+50*TRACKS_LENGTH+STARTX,350+50*TRACKS_WIDTH+STARTY,-90,flip=True).setSection(SectionType.CONVEYOR_BOT)   #bottom right
-Corner(100+STARTX,350+50*TRACKS_WIDTH+STARTY,-180,flip=True).setSection(SectionType.CONVEYOR_BOT)                  #bottom left
+Corner(100+STARTX,250-50*TRACKS_WIDTH+STARTY,0).setSection(SectionType.CONVEYOR_TOP2)                               #top left
+Corner(150+50*TRACKS_LENGTH+STARTX,250-50*TRACKS_WIDTH+STARTY,-90).setSection(SectionType.CONVEYOR_TOP3)            #top right
+Corner(150+50*TRACKS_LENGTH+STARTX,350+50*TRACKS_WIDTH+STARTY,-90,flip=True).setSection(SectionType.CONVEYOR_BOT3)   #bottom right
+Corner(100+STARTX,350+50*TRACKS_WIDTH+STARTY,-180,flip=True).setSection(SectionType.CONVEYOR_BOT2)                  #bottom left
 
 #create list of Selector instances
 Selector(100+STARTX, 300+STARTY, angle=90, entryZone='left')
@@ -71,6 +72,9 @@ dispenser.setSection(SectionType.CONVEYOR_START)
 button_dispenser = pygame.Rect(0,0,200,100)
 #END DISPENSER CREATION -----------------------------
 
+#START COLLECTOR CREATION --------------------------------
+Collector(150+50*TRACKS_LENGTH+STARTX,300+STARTY)
+#END COLLECTOR CREATION --------------------------------
 # DRAWING SEQUENCE ------------------------------------------
 def drawing_elements():
     screen.fill(pygame.Color(255,255,255))  # background color drawing in white
