@@ -48,8 +48,13 @@ class Box:
     def getPosition(self):
         return (self.pos.x, self.pos.y)
     
+    def setPosition(self, x, y):
+        self.pos.x = x
+        self.pos.y = y
+    
     def getSize(self):
         return self.size
 
     def getColor(self):
         return self.color
+    

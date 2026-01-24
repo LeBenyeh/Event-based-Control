@@ -7,7 +7,7 @@ from Corner import Corner
 from Selector import Selector
 from SectionType import SectionType
 from Transformer import Transformer
-
+from Dispenser import Dispenser
 
 #Lists
 
@@ -17,59 +17,58 @@ clock = pygame.time.Clock()  # Creating clock
 
 assets.load_assets()
 DELTA_TIME = 0.1
+STARTX = 100
+STARTY = 100
 
 # START CONVEYOR AND CORNER CREATION -----------------------------------------------------------------
-conveyorStart = Conveyor(50,300,angle=-90.0)
+conveyorStart = Conveyor(50+STARTX,300+STARTY,angle=-90.0)
 conveyorStart.setSection(SectionType.CONVEYOR_START)
-conveyorStart2 = Conveyor(0,300,-90.0)
+conveyorStart2 = Conveyor(0+STARTX,300+STARTY,-90.0)
 conveyorStart2.setSection(SectionType.CONVEYOR_START)
 
 
 
 # Creation of  vertical left conveyors
 for i in range(0, TRACKS_WIDTH):
-    Conveyor(100,300-50*(i+1),0).setSection(SectionType.CONVEYOR_TOP)
-    Conveyor(100,300+50*(i+1),180).setSection(SectionType.CONVEYOR_BOT)
+    Conveyor(100+STARTX,300-50*(i+1)+STARTY,0).setSection(SectionType.CONVEYOR_TOP)
+    Conveyor(100+STARTX,300+50*(i+1)+STARTY,180).setSection(SectionType.CONVEYOR_BOT)
 
 # Creation of horizontal conveyors
 for i in range(0,TRACKS_LENGTH):
     if i == TRACKS_LENGTH - 3:
-        transformerTop = Transformer(150+50*i,300-50*(TRACKS_WIDTH+1),angle=90)
-        Transformer(150+50*i,300,angle=90)
-        Transformer(150+50*i,300+50*(TRACKS_WIDTH+1),angle=90)
+        Transformer(150+50*i+STARTX,300-50*(TRACKS_WIDTH+1)+STARTY,angle=90)
+        Transformer(150+50*i+STARTX,300+STARTY,angle=90)
+        Transformer(150+50*i+STARTX,300+50*(TRACKS_WIDTH+1)+STARTY,angle=90)
     elif i > TRACKS_LENGTH - 3: 
-        Conveyor(150+50*i,300-50*(TRACKS_WIDTH+1),-90).setSection(SectionType.CONVEYOR_TOP2)
-        Conveyor(150+50*i,300,-90).setSection(SectionType.CONVEYOR_MID2)
-        Conveyor(150+50*i,300+50*(TRACKS_WIDTH+1),-90).setSection(SectionType.CONVEYOR_BOT2)
+        Conveyor(150+50*i+STARTX,300-50*(TRACKS_WIDTH+1)+STARTY,-90).setSection(SectionType.CONVEYOR_TOP2)
+        Conveyor(150+50*i+STARTX,300+STARTY,-90).setSection(SectionType.CONVEYOR_MID2)
+        Conveyor(150+50*i+STARTX,300+50*(TRACKS_WIDTH+1)+STARTY,-90).setSection(SectionType.CONVEYOR_BOT2)
     else : 
-        Conveyor(150+50*i,300-50*(TRACKS_WIDTH+1),-90).setSection(SectionType.CONVEYOR_TOP)
-        Conveyor(150+50*i,300,-90).setSection(SectionType.CONVEYOR_MID)
-        Conveyor(150+50*i,300+50*(TRACKS_WIDTH+1),-90).setSection(SectionType.CONVEYOR_BOT)
+        Conveyor(150+50*i+STARTX,300-50*(TRACKS_WIDTH+1)+STARTY,-90).setSection(SectionType.CONVEYOR_TOP)
+        Conveyor(150+50*i+STARTX,300+STARTY,-90).setSection(SectionType.CONVEYOR_MID)
+        Conveyor(150+50*i+STARTX,300+50*(TRACKS_WIDTH+1)+STARTY,-90).setSection(SectionType.CONVEYOR_BOT)
 
 
 # Creation of vertical right conveyors
 for i in range(TRACKS_WIDTH,0,-1):
-    Conveyor(150+50*TRACKS_LENGTH,300-50*i,-180).setSection(SectionType.CONVEYOR_TOP)
-    Conveyor(150+50*TRACKS_LENGTH,300+50*i,0).setSection(SectionType.CONVEYOR_BOT)
+    Conveyor(150+50*TRACKS_LENGTH+STARTX,300-50*i+STARTY,-180).setSection(SectionType.CONVEYOR_TOP)
+    Conveyor(150+50*TRACKS_LENGTH+STARTX,300+50*i+STARTY,0).setSection(SectionType.CONVEYOR_BOT)
 
 # Create corner instances
-Corner(100,250-50*TRACKS_WIDTH,0).setSection(SectionType.CONVEYOR_TOP)                               #top left
-Corner(150+50*TRACKS_LENGTH,250-50*TRACKS_WIDTH,-90).setSection(SectionType.CONVEYOR_TOP)            #top right
-Corner(150+50*TRACKS_LENGTH,350+50*TRACKS_WIDTH,-90,flip=True).setSection(SectionType.CONVEYOR_BOT)   #bottom right
-Corner(100,350+50*TRACKS_WIDTH,-180,flip=True).setSection(SectionType.CONVEYOR_BOT)                  #bottom left
+Corner(100+STARTX,250-50*TRACKS_WIDTH+STARTY,0).setSection(SectionType.CONVEYOR_TOP)                               #top left
+Corner(150+50*TRACKS_LENGTH+STARTX,250-50*TRACKS_WIDTH+STARTY,-90).setSection(SectionType.CONVEYOR_TOP)            #top right
+Corner(150+50*TRACKS_LENGTH+STARTX,350+50*TRACKS_WIDTH+STARTY,-90,flip=True).setSection(SectionType.CONVEYOR_BOT)   #bottom right
+Corner(100+STARTX,350+50*TRACKS_WIDTH+STARTY,-180,flip=True).setSection(SectionType.CONVEYOR_BOT)                  #bottom left
 
 #create list of Selector instances
-Selector(100, 300, angle=90, entryZone='left')
+Selector(100+STARTX, 300+STARTY, angle=90, entryZone='left')
 # END CONVEYOR AND CORNER CREATION -----------------------------------------------------------------
 
+#START DISPENSER CREATION ------------------------- 
+dispenser = Dispenser(STARTX-50, 300+STARTY, angle=-90)
 
-# START BOXES CREATION -----------------------------------------------------------------
-
-Box(125, 400, 0, 0, color=BLUE)
-Box(200, 65, 0, 0, color=GREEN)
-Box(60, 315, 0, 0, color=RED)
-Box(0, 315, 0, 0, color=BLUE)
-# END BOXES CREATION ------------------------------------------
+button_dispenser = pygame.Rect(0,0,200,100)
+#END DISPENSER CREATION -----------------------------
 
 # DRAWING SEQUENCE ------------------------------------------
 def drawing_elements():
@@ -83,6 +82,12 @@ def drawing_elements():
     for b in Box.boxList:
         b.update(DELTA_TIME)
         b.draw(screen)
+
+    pygame.draw.rect(screen, BLUE, button_dispenser)
+    font = pygame.font.SysFont(None, 36)
+    text = font.render("Dispense", True,BLACK)
+    text_rect = text.get_rect(center=button_dispenser.center)
+    screen.blit(text, text_rect)
     pygame.display.flip()
 
 def updateSelectors():
@@ -112,7 +117,10 @@ running = True
 while running:
     for events in pygame.event.get():
         if events.type == pygame.QUIT:
-            running = False 
+            running = False
+        elif events.type == pygame.MOUSEBUTTONDOWN:
+            if button_dispenser.collidepoint(events.pos):
+                dispenser.dispense()
     collisionChecker(Conveyor.conveyorsList, Box.boxList)
     updateSelectors()
     drawing_elements()

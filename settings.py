@@ -2,8 +2,8 @@ import pygame
 pygame.init()
 
 # Windows
-SCREEN_WIDTH = 640
-SCREEN_HEIGHT = 640
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 800
 FPS = 60
 
 
@@ -11,6 +11,7 @@ FPS = 60
 RED = pygame.Color(255,0,0)
 BLUE = pygame.Color(0,0,255)
 GREEN = pygame.Color(0,255,0)
+BLACK = pygame.Color(0,0,0)
 
 # Game settings
 
