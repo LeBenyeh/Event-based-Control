@@ -2,7 +2,7 @@ import random
 import assets
 from Conveyor import Conveyor
 from Box import Box
-from settings import BLUE,RED,GREEN,DISPENSER_COOLDOWN
+from settings import BLUE,RED,GREEN
 
 class Dispenser(Conveyor):
     def __init__(self, x, y, angle=0, scale=0.1):
