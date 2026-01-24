@@ -9,14 +9,12 @@ class Transformer(Selector):
         self.base_img = assets.TRANSFORMER_IMG.copy() 
         super().__init__(x, y, angle, scale, entryZone='left')
         self.setExitZone(self.rect, 'right')
-        print("Transformer exit_rect after set:", self.detectionZone.exit_rect)
         self.section = SectionType.TRANSFORMER
         self.startTimer = 0
         self.transformerList.append(self)
 
 
     def stateHandler(self, box):
-        print(self.getStateMachine())
         import pygame
         match self.state_machine:
             case SelectorState.IDLE:
