@@ -1,5 +1,5 @@
 import pygame
-from settings import RED, BLUE, GREEN
+from settings import RED, BLUE, GREEN, BLACK
 import assets
 
 class Box:
@@ -15,6 +15,8 @@ class Box:
             box_img.fill(BLUE, special_flags=pygame.BLEND_RGBA_MULT)
         elif color == GREEN:
             box_img.fill(GREEN, special_flags=pygame.BLEND_RGBA_MULT)
+        elif color == BLACK:
+            box_img.fill(BLACK, special_flags=pygame.BLEND_RGBA_MULT)
         self.size = size
         self.surface = box_img
         self.rect = self.surface.get_rect(topleft=(x, y))

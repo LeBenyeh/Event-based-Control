@@ -46,4 +46,7 @@ class DetectionZone:
 
     def isBoxInExitZone(self, box: Box) -> bool:
         return bool(self.exit_rect and self.exit_rect.colliderect(box.rect))
+    
+    def untrackBox(self):
+        self.tracked_box = None
 

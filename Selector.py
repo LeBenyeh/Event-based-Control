@@ -5,7 +5,7 @@ from SelectorState import SelectorState
 from Conveyor import Conveyor
 from Box import Box
 from DetectionZone import DetectionZone
-from settings import RED, GREEN, BLUE
+from settings import RED, GREEN, BLUE, BLACK
 from SectionType import SectionType
 
 class Selector(Conveyor):
@@ -49,6 +49,7 @@ class Selector(Conveyor):
                 elif self.currentBoxColor == GREEN:
                   self.rotate(90)
                 self.state_machine = SelectorState.SENDING
+                   
             case SelectorState.SENDING:
                 self.moveToFacingDirection(box)
             
@@ -60,6 +61,7 @@ class Selector(Conveyor):
                 elif self.currentBoxColor == GREEN:
                   self.rotate(-90)
                 self.collision = False
+                print("HELLOOO")
                 self.state_machine = SelectorState.IDLE
                 
     def update(self, box :Box):
@@ -77,7 +79,10 @@ class Selector(Conveyor):
         elif self.currentBoxColor == GREEN:
             exitZone = 'down'
         else:
-            exitZone = 'left'
+            exitZone = 'right'
+            self.state_machine=SelectorState.RESETTING
+            self.detectionZone.untrackBox()
+            box.deleteBox()
         self.resetExitZone()
         self.setExitZone(self.rect, exitZone)
 
