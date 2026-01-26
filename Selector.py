@@ -61,7 +61,6 @@ class Selector(Conveyor):
                 elif self.currentBoxColor == GREEN:
                   self.rotate(-90)
                 self.collision = False
-                print("HELLOOO")
                 self.state_machine = SelectorState.IDLE
                 
     def update(self, box :Box):

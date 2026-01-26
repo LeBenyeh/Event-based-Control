@@ -46,7 +46,6 @@ class Transformer(Selector):
                 self.state_machine = SelectorState.IDLE
 
     def boxEnteredBehavior(self, box):
-        print("Box received")
         self.state_machine = SelectorState.RECEIVING
         self.setExitZone(self.rect,'right')
 
