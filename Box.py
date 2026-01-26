@@ -37,6 +37,9 @@ class Box:
     def collision(self, conveyor) -> bool:
         return self.rect.colliderect(conveyor.rect)
 
+    def collisionBox(self, otherBox: Box) -> bool:
+        return self.rect.colliderect(otherBox.rect)
+    
     def getMiddle(self):
         return self.rect.center
     

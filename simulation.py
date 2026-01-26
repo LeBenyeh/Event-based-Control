@@ -125,7 +125,11 @@ def collisionChecker(conveyors, boxes):
             if box.collision(conveyor) and conveyor.state == 1:
                 conveyor.collisionHandler(box)
                 break   
-
+def boxCollisionChecker(boxList):
+    for box1 in boxList:
+        for box2 in boxList:
+            if box1.collisionBox(box2) and box1 != box2:
+                box1.deleteBox()
 def emergency_stop():
     for c in Conveyor.conveyorsList:
         c.stop()
@@ -148,6 +152,7 @@ while running:
                     conveyorListActivate(Conveyor.conveyorsList)
                     systemStopped = False
     collisionChecker(Conveyor.conveyorsList, Box.boxList)
+    boxCollisionChecker(Box.boxList)
     updateSelectors()
     drawing_elements()
 
