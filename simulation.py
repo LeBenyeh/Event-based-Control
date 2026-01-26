@@ -15,6 +15,7 @@ from Collector import Collector
 # screen and framerate variables
 screen = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT)) #creating canva
 clock = pygame.time.Clock()  # Creating clock
+systemStopped = False
 
 assets.load_assets()
 DELTA_TIME = 0.1
@@ -26,7 +27,6 @@ conveyorStart = Conveyor(50+STARTX,300+STARTY,angle=-90.0)
 conveyorStart.setSection(SectionType.CONVEYOR_START)
 conveyorStart2 = Conveyor(0+STARTX,300+STARTY,-90.0)
 conveyorStart2.setSection(SectionType.CONVEYOR_START)
-
 
 
 # Creation of  vertical left conveyors
@@ -48,7 +48,6 @@ for i in range(0,TRACKS_LENGTH):
         Conveyor(150+50*i+STARTX,300-50*(TRACKS_WIDTH+1)+STARTY,-90).setSection(SectionType.CONVEYOR_TOP2)
         Conveyor(150+50*i+STARTX,300+STARTY,-90).setSection(SectionType.CONVEYOR_MID1)
         Conveyor(150+50*i+STARTX,300+50*(TRACKS_WIDTH+1)+STARTY,-90).setSection(SectionType.CONVEYOR_BOT2)
-
 
 # Creation of vertical right conveyors
 for i in range(TRACKS_WIDTH,0,-1):
@@ -75,6 +74,10 @@ button_dispenser = pygame.Rect(0,0,200,100)
 #START COLLECTOR CREATION --------------------------------
 Collector(150+50*TRACKS_LENGTH+STARTX,300+STARTY)
 #END COLLECTOR CREATION --------------------------------
+
+#EMERGENCY BUTTON CREATION -----------------------------------
+emergency_button = pygame.Rect(SCREEN_WIDTH-200,0,200,100)  # Create
+#END EMERGENCY BUTTON CREATION -----------------------------------
 # DRAWING SEQUENCE ------------------------------------------
 def drawing_elements():
     screen.fill(pygame.Color(255,255,255))  # background color drawing in white
@@ -90,9 +93,17 @@ def drawing_elements():
 
     pygame.draw.rect(screen, BLUE, button_dispenser)
     font = pygame.font.SysFont(None, 36)
-    text = font.render("Dispense", True,BLACK)
-    text_rect = text.get_rect(center=button_dispenser.center)
-    screen.blit(text, text_rect)
+    text_dispense = font.render("Dispense", True,BLACK)
+    text_rect_disp = text_dispense.get_rect(center=button_dispenser.center)
+    screen.blit(text_dispense, text_rect_disp)
+    if systemStopped == False:
+        pygame.draw.rect(screen, RED, emergency_button)
+        text_emergency = font.render("Emergency", True,BLACK)
+    else:
+        pygame.draw.rect(screen, GREEN, emergency_button)
+        text_emergency = font.render("RESTART", True,BLACK)
+    text_rect_emergency = text_emergency.get_rect(center=emergency_button.center)
+    screen.blit(text_emergency, text_rect_emergency)
     pygame.display.flip()
 
 def updateSelectors():
@@ -114,7 +125,10 @@ def collisionChecker(conveyors, boxes):
             if box.collision(conveyor) and conveyor.state == 1:
                 conveyor.collisionHandler(box)
                 break   
-  
+
+def emergency_stop():
+    for c in Conveyor.conveyorsList:
+        c.stop()
 conveyorListActivate(Conveyor.conveyorsList)
 
 # MAIN LOOP ------------------------------------------
@@ -126,6 +140,13 @@ while running:
         elif events.type == pygame.MOUSEBUTTONDOWN:
             if button_dispenser.collidepoint(events.pos):
                 dispenser.dispense()
+            elif emergency_button.collidepoint(events.pos):
+                if systemStopped == False:
+                    emergency_stop()
+                    systemStopped = True
+                else:
+                    conveyorListActivate(Conveyor.conveyorsList)
+                    systemStopped = False
     collisionChecker(Conveyor.conveyorsList, Box.boxList)
     updateSelectors()
     drawing_elements()
