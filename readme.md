@@ -16,8 +16,8 @@
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-username/convoyeur-system.git
-cd convoyeur-system
+git clone https://github.com/LeBenyeh/Event-based-Control.git
+cd Event-Based-Control
 ```
 
 ### 2. Create a Virtual Environment
